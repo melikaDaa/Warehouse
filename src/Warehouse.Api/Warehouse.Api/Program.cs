@@ -1,24 +1,32 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using Warehouse.Api.Domain.Abstractions;
 using Warehouse.Api.Domain.Entities;
 using Warehouse.Api.Infrastructure.Persistence;
+using Warehouse.Api.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DbContext
+// ---------- DbContext ----------
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlite(connectionString);
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-// Identity
+// Repositories + UnitOfWork
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IStockMovementRepository, StockMovementRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// ---------- Identity ----------
 builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-// Auth/Identity  ‰Ÿ?„«  Å«?Â
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
@@ -28,27 +36,95 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 4;
 });
 
-// Controllers + Swagger
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// ---------- JWT ----------
+var jwtSection = builder.Configuration.GetSection("Jwt");
+var jwtKey = jwtSection["Key"];
+// »—«? ”«œÂ ‘œ‰  „—?‰° ›⁄·« Issuer/Audience —« Ê·?œ?  ‰„?ùò‰?„
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey!));
 
-// Authorization
-builder.Services.AddAuthorization();
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey,
+
+            // »—«?  „—?‰: ›⁄·« Issuer Ê Audience —« çò ‰ò‰
+            ValidateIssuer = false,
+            ValidateAudience = false,
+
+            ValidateLifetime = true
+        };
+    });
+
+// ---------- Authorization + Policies ----------
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdmin", policy =>
+        policy.RequireRole("SystemAdmin"));
+
+    options.AddPolicy("CanManageProducts", policy =>
+        policy.RequireRole("SystemAdmin", "WarehouseManager"));
+
+    options.AddPolicy("CanDoStockMovements", policy =>
+        policy.RequireRole("SystemAdmin", "WarehouseManager", "NormalUser"));
+
+    options.AddPolicy("CanViewReports", policy =>
+        policy.RequireRole("SystemAdmin", "WarehouseManager", "Auditor"));
+});
+
+// ---------- Controllers ----------
+builder.Services.AddControllers();
+
+// ---------- Swagger + JWT ----------
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Warehouse API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Just paste the JWT token here, WITHOUT 'Bearer ' prefix"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 
-// „«?ê—?‘‰ Ê ”«Œ  œ? «»?” œ— «” «— «Å (›ﬁÿ »—«?  „—?‰)
+// ---------- Migration + Seed ----------
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
-
     await DbInitializer.SeedAsync(app.Services);
 }
 
-
-// „Õ?ÿ Development => Swagger
+// ---------- Middleware ----------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
