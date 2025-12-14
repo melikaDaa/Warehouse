@@ -305,3 +305,6 @@ D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehous
 D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.Bcl.TimeProvider.dll
+D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.FeatureManagement.dll
+D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.FeatureManagement.AspNetCore.dll

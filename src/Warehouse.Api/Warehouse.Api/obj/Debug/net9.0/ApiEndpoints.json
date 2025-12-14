@@ -230,5 +230,15 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Warehouse.Api.Controllers.TestController",
+    "Method": "Boom",
+    "RelativePath": "api/Test/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

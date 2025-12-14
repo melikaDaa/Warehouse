@@ -1,12 +1,88 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|d:\\new folder\\asp.netcore bootcamp\\projects\\warehouse\\src\\warehouse.api\\warehouse.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|solutionrelative:warehouse.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|d:\\new folder\\asp.netcore bootcamp\\projects\\warehouse\\src\\warehouse.api\\warehouse.api\\controllers\\stockmovementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|solutionrelative:warehouse.api\\controllers\\stockmovementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|d:\\new folder\\asp.netcore bootcamp\\projects\\warehouse\\src\\warehouse.api\\warehouse.api\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|solutionrelative:warehouse.api\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|d:\\new folder\\asp.netcore bootcamp\\projects\\warehouse\\src\\warehouse.api\\warehouse.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2D9F1F4-47EF-45F2-A00A-B2E83A76DCC7}|Warehouse.Api\\Warehouse.Api.csproj|solutionrelative:warehouse.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StockMovementsController.cs",
+              "DocumentMoniker": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\Controllers\\StockMovementsController.cs",
+              "RelativeDocumentMoniker": "Warehouse.Api\\Controllers\\StockMovementsController.cs",
+              "ToolTip": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\Controllers\\StockMovementsController.cs",
+              "RelativeToolTip": "Warehouse.Api\\Controllers\\StockMovementsController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:52:14.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "Warehouse.Api\\Controllers\\ReportsController.cs",
+              "ToolTip": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "Warehouse.Api\\Controllers\\ReportsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:51:31.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Warehouse.Api\\Program.cs",
+              "ToolTip": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\Program.cs",
+              "RelativeToolTip": "Warehouse.Api\\Program.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAFQAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:50:55.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Warehouse.Api\\appsettings.json",
+              "ToolTip": "D:\\New folder\\Asp.netCore BootCamp\\Projects\\Warehouse\\src\\Warehouse.Api\\Warehouse.Api\\appsettings.json",
+              "RelativeToolTip": "Warehouse.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-14T14:50:33.244Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

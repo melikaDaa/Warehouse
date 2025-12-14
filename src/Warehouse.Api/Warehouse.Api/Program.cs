@@ -1,15 +1,18 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Warehouse.Api.Domain.Abstractions;
 using Warehouse.Api.Domain.Entities;
+using Warehouse.Api.Infrastructure.Middleware;
 using Warehouse.Api.Infrastructure.Persistence;
 using Warehouse.Api.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // ---------- DbContext ----------
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -59,7 +62,8 @@ builder.Services
             ValidateIssuer = false,
             ValidateAudience = false,
 
-            ValidateLifetime = true
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromSeconds(30)
         };
     });
 
@@ -78,9 +82,28 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("CanViewReports", policy =>
         policy.RequireRole("SystemAdmin", "WarehouseManager", "Auditor"));
 });
-
+builder.Services.AddFeatureManagement();
 // ---------- Controllers ----------
 builder.Services.AddControllers();
+builder.Services.AddProblemDetails(options =>
+{
+    // œ— Development Ã“∆?«  »?‘ — »œÂ° œ— Production ‰Â
+    options.CustomizeProblemDetails = ctx =>
+    {
+        ctx.ProblemDetails.Extensions["traceId"] = ctx.HttpContext.TraceIdentifier;
+
+        if (builder.Environment.IsDevelopment())
+        {
+            // «ê— ŒÊ«” ? Ã“∆?«  exception —« Â„ »œÂ?:
+            var feature = ctx.HttpContext.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+            if (feature?.Error is not null)
+            {
+                ctx.ProblemDetails.Extensions["exception"] = feature.Error.Message;
+            }
+        }
+    };
+});
+
 
 // ---------- Swagger + JWT ----------
 builder.Services.AddEndpointsApiExplorer();
@@ -115,7 +138,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
+app.UseExceptionHandler();
 // ---------- Migration + Seed ----------
 using (var scope = app.Services.CreateScope())
 {
@@ -123,6 +146,7 @@ using (var scope = app.Services.CreateScope())
     await db.Database.MigrateAsync();
     await DbInitializer.SeedAsync(app.Services);
 }
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // ---------- Middleware ----------
 if (app.Environment.IsDevelopment())
