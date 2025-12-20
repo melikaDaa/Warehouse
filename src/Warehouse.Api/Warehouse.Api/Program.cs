@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Warehouse.Api.Domain.Abstractions;
 using Warehouse.Api.Domain.Entities;
+using Warehouse.Api.Infrastructure.Caching;
 using Warehouse.Api.Infrastructure.Middleware;
 using Warehouse.Api.Infrastructure.Persistence;
 using Warehouse.Api.Infrastructure.Persistence.Repositories;
@@ -29,6 +30,13 @@ builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["Redis:ConnectionString"];
+    options.InstanceName = builder.Configuration["Redis:InstanceName"];
+});
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

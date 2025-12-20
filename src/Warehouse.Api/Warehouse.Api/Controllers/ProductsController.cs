@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Warehouse.Api.Domain.Abstractions;
 using Warehouse.Api.Domain.Entities;
 using Warehouse.Api.DTOs;
+using Warehouse.Api.Infrastructure.Caching;
 using Warehouse.Api.Infrastructure.Persistence;
 
 namespace Warehouse.Api.Controllers;
@@ -14,10 +15,12 @@ namespace Warehouse.Api.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly IUnitOfWork _uow;
+    private readonly ICacheService _cache;
 
-    public ProductsController(IUnitOfWork uow)
+    public ProductsController(IUnitOfWork uow, ICacheService cache = null)
     {
         _uow = uow;
+        _cache = cache;
     }
 
     // GET: api/Products
@@ -25,6 +28,10 @@ public class ProductsController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
+        var cached = await _cache.GetAsync<List<object>>(CacheKeys.ProductsList);
+        if (cached is not null)
+            return Ok(cached);
+
         var products = await _uow.Products.GetAllWithCategoryAsync();
 
         var result = products.Select(p => new
@@ -35,7 +42,9 @@ public class ProductsController : ControllerBase
             CategoryId = p.CategoryId,
             CategoryName = p.Category.Name,
             p.CurrentStock
-        });
+        }).ToList<object>();
+
+        await _cache.SetAsync(CacheKeys.ProductsList, result, TimeSpan.FromMinutes(2));
 
         return Ok(result);
     }
@@ -87,6 +96,8 @@ public class ProductsController : ControllerBase
 
         await _uow.Products.AddAsync(product);
         await _uow.SaveChangesAsync();
+        await _cache.RemoveAsync(CacheKeys.ProductsList);
+        await _cache.RemoveAsync(CacheKeys.StockSummary);
 
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
@@ -118,6 +129,8 @@ public class ProductsController : ControllerBase
         product.CategoryId = request.CategoryId;
 
         await _uow.SaveChangesAsync();
+        await _cache.RemoveAsync(CacheKeys.ProductsList);
+        await _cache.RemoveAsync(CacheKeys.StockSummary);
 
         return NoContent();
     }
@@ -136,6 +149,8 @@ public class ProductsController : ControllerBase
 
         _uow.Products.Remove(product);
         await _uow.SaveChangesAsync();
+        await _cache.RemoveAsync(CacheKeys.ProductsList);
+        await _cache.RemoveAsync(CacheKeys.StockSummary);
 
         return NoContent();
     }

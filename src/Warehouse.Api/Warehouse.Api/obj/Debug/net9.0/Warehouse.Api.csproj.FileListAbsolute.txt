@@ -308,3 +308,6 @@ D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehous
 D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.Bcl.TimeProvider.dll
 D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.FeatureManagement.dll
 D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.FeatureManagement.AspNetCore.dll
+D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\Pipelines.Sockets.Unofficial.dll
+D:\New folder\Asp.netCore BootCamp\Projects\Warehouse\src\Warehouse.Api\Warehouse.Api\bin\Debug\net9.0\StackExchange.Redis.dll
