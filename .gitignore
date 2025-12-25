@@ -2,6 +2,7 @@
 ## .NET / Visual Studio
 ## ===============================
 .vs/
+**/.vs/
 bin/
 obj/
 *.user
